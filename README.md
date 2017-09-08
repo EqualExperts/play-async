@@ -1,8 +1,6 @@
 
 # play-async
 
-[![Build Status](https://travis-ci.org/hmrc/play-async.svg?branch=master)](https://travis-ci.org/hmrc/play-async) [ ![Download](https://api.bintray.com/packages/hmrc/releases/play-async/images/download.svg) ](https://bintray.com/hmrc/releases/play-async/_latestVersion)
-
 
 Framework disconnects the HTTP client (Browser/RestFul API) request from waiting for long running server-side actions to complete and shields the application server from clients attempting to re-submit duplicate requests.
 
