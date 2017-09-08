@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 HM Revenue & Customs
+ * Copyright 2017 Equal Experts
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,21 +14,14 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.play.asyncmvc.example.connectors
+package com.equalexperts.play.asyncmvc.async
 
-import play.api.libs.json.Json
-import scala.concurrent.Future
+import java.util.concurrent.atomic.AtomicLong
 
-case class Stock(name:String, value:Double)
-object Stock {
-  implicit val format = Json.format[Stock]
-}
+object Throttle {
+  private var counter=new AtomicLong(0)
 
-trait StockConnector {
-
-  def baseUrl: String
-  def url(path: String) = s"$baseUrl$path"
-
-  def getStock(id: Long): Future[Stock] = Future.successful(Stock("Some Stock", id))
-
+  def up() = counter.getAndAdd(1)
+  def down() = counter.decrementAndGet
+  def current = counter.get()
 }

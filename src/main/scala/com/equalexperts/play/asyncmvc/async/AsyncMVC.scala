@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 HM Revenue & Customs
+ * Copyright 2017 Equal Experts
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.play.asyncmvc.async
+package com.equalexperts.play.asyncmvc.async
 
 import akka.actor.ActorRef
-import uk.gov.hmrc.play.asyncmvc.model._
+import com.equalexperts.play.asyncmvc.model._
 import play.api.Logger
 import play.api.mvc._
 import uk.gov.hmrc.time.DateTimeUtils

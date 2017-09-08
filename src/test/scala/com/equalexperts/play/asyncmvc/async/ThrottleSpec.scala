@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 HM Revenue & Customs
+ * Copyright 2017 Equal Experts
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,14 +14,23 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.play.asyncmvc.async
+package com.equalexperts.play.asyncmvc.async
 
-import java.util.concurrent.atomic.AtomicLong
+import org.scalatest.concurrent.{Eventually, ScalaFutures}
+import uk.gov.hmrc.play.test.UnitSpec
 
-object Throttle {
-  private var counter=new AtomicLong(0)
+class ThrottleSpec extends UnitSpec with ScalaFutures with Eventually {
 
-  def up() = counter.getAndAdd(1)
-  def down() = counter.decrementAndGet
-  def current = counter.get()
+  "Throttle" should {
+
+    "Increment and Decrement the throttle " in {
+      Throttle.current shouldBe 0
+
+      Throttle.up()
+      Throttle.current shouldBe 1
+
+      Throttle.down()
+      Throttle.current shouldBe 0
+    }
+  }
 }

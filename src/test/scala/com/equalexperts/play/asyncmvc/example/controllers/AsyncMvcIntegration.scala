@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 HM Revenue & Customs
+ * Copyright 2017 Equal Experts
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.play.asyncmvc.example.controllers
+package com.equalexperts.play.asyncmvc.example.controllers
 
 import akka.actor.{ActorRef, Props}
-import uk.gov.hmrc.play.asyncmvc.async.AsyncMVC
-import uk.gov.hmrc.play.asyncmvc.example.connectors.Stock
+import com.equalexperts.play.asyncmvc.async.AsyncMVC
+import com.equalexperts.play.asyncmvc.example.connectors.Stock
 import play.api.Play.current
 import play.api.libs.concurrent.Akka
 import play.api.libs.json.Json

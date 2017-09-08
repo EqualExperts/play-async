@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 HM Revenue & Customs
+ * Copyright 2017 Equal Experts
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.play.asyncmvc.controllers
+package com.equalexperts.play.asyncmvc.controllers
 
 import akka.actor.{Props, ActorSystem, ActorRef}
 import akka.stream.ActorMaterializer
-import uk.gov.hmrc.play.asyncmvc.async.{Cache, TimedEvent}
-import uk.gov.hmrc.play.asyncmvc.example.connectors.{Stock, StockConnector}
-import uk.gov.hmrc.play.asyncmvc.example.controllers.{ExampleAsyncController, InputForm}
-import uk.gov.hmrc.play.asyncmvc.model.TaskCache
+import com.equalexperts.play.asyncmvc.async.{Cache, TimedEvent}
+import com.equalexperts.play.asyncmvc.example.connectors.{Stock, StockConnector}
+import com.equalexperts.play.asyncmvc.example.controllers.{ExampleAsyncController, InputForm}
+import com.equalexperts.play.asyncmvc.model.TaskCache
 import play.api.test.FakeRequest
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -100,7 +100,7 @@ trait AsyncSetup {
   trait Blocking extends Setup {
 
     override val testSessionId="TestIdBlock"
-    val form = uk.gov.hmrc.play.asyncmvc.example.controllers.InputForm("Example Data", 11)
+    val form = com.equalexperts.play.asyncmvc.example.controllers.InputForm("Example Data", 11)
 
     override lazy val controller : ExampleAsyncController = new ControllerUnderTest {
       override def getName = testSessionId

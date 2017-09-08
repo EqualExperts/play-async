@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 HM Revenue & Customs
+ * Copyright 2017 Equal Experts
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,19 +14,18 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.play.asyncmvc.async
+package com.equalexperts.play.asyncmvc.async
 
+import com.equalexperts.play.asyncmvc.controllers.FakePlayApplication
+import com.equalexperts.play.asyncmvc.example.connectors.Stock
+import com.equalexperts.play.asyncmvc.example.controllers.AsyncMvcIntegration
+import com.equalexperts.play.asyncmvc.model.{StatusCodes, TaskCache}
 import org.scalatest.concurrent.PatienceConfiguration.Timeout
 import org.scalatest.concurrent.{Eventually, ScalaFutures}
 import org.scalatest.time.{Millis, Span}
 import play.api.libs.json.Json
 import play.api.mvc.Controller
-import uk.gov.hmrc.play.asyncmvc.controllers.FakePlayApplication
-import uk.gov.hmrc.play.asyncmvc.example.connectors.Stock
-import uk.gov.hmrc.play.asyncmvc.model.{StatusCodes, TaskCache}
 import uk.gov.hmrc.play.test.UnitSpec
-
-import uk.gov.hmrc.play.asyncmvc.example.controllers.AsyncMvcIntegration
 import uk.gov.hmrc.time.DateTimeUtils
 
 import scala.concurrent.Future

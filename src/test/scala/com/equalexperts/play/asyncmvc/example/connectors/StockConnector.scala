@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 HM Revenue & Customs
+ * Copyright 2017 Equal Experts
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,23 +14,21 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.play.asyncmvc.async
+package com.equalexperts.play.asyncmvc.example.connectors
 
-import java.util.Timer
-import java.util.TimerTask
-import scala.concurrent._
+import play.api.libs.json.Json
+import scala.concurrent.Future
 
-object TimedEvent {
-  val timer = new Timer
+case class Stock(name:String, value:Double)
+object Stock {
+  implicit val format = Json.format[Stock]
+}
 
-  // Return a Future which completes with the supplied value after 'n' milliseconds.
-  def delayedSuccess[T](millis: Long, value: T): Future[T] = {
-    val result = Promise[T]()
-    timer.schedule(new TimerTask() {
-      def run() = {
-        result.success(value)
-      }
-    }, millis)
-    result.future
-  }
+trait StockConnector {
+
+  def baseUrl: String
+  def url(path: String) = s"$baseUrl$path"
+
+  def getStock(id: Long): Future[Stock] = Future.successful(Stock("Some Stock", id))
+
 }

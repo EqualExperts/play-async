@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 HM Revenue & Customs
+ * Copyright 2017 Equal Experts
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.play.asyncmvc.controllers
+package com.equalexperts.play.asyncmvc.controllers
 
 import akka.actor.ActorSystem
 import akka.stream.ActorMaterializer
@@ -25,9 +25,9 @@ import org.scalatest.time._
 import play.api.libs.json.Json
 import play.api.mvc._
 import play.api.test.{FakeApplication, FakeRequest}
-import uk.gov.hmrc.play.asyncmvc.async.TimedEvent
-import uk.gov.hmrc.play.asyncmvc.example.controllers.{AsyncMap, ExampleAsyncController, InputForm}
-import uk.gov.hmrc.play.asyncmvc.model.AsyncMvcSession
+import com.equalexperts.play.asyncmvc.async.TimedEvent
+import com.equalexperts.play.asyncmvc.example.controllers.{AsyncMap, ExampleAsyncController, InputForm}
+import com.equalexperts.play.asyncmvc.model.AsyncMvcSession
 import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -84,7 +84,7 @@ class AsyncControllerSpec extends AsyncSetup with UnitSpec with FakePlayApplicat
       bodyOf(result) should include regex "<p>An error occurred processing the request!</p>"
 
       eventually(Timeout(Span(10000, Milliseconds)), Interval(Span(2, Seconds))) {
-        uk.gov.hmrc.play.asyncmvc.async.Throttle.current shouldBe 0
+        com.equalexperts.play.asyncmvc.async.Throttle.current shouldBe 0
       }
     }
   }
@@ -166,7 +166,7 @@ class AsyncControllerSpec extends AsyncSetup with UnitSpec with FakePlayApplicat
         }
 
         eventually(Timeout(Span(95000, Milliseconds)), Interval(Span(2, Seconds))) {
-          uk.gov.hmrc.play.asyncmvc.async.Throttle.current shouldBe 0
+          com.equalexperts.play.asyncmvc.async.Throttle.current shouldBe 0
         }
        println("Time spent processing... " + (System.currentTimeMillis()-time))
       }
@@ -221,7 +221,7 @@ class AsyncControllerSpec extends AsyncSetup with UnitSpec with FakePlayApplicat
     }
 
     eventually(Timeout(Span(6, Seconds))) {
-      uk.gov.hmrc.play.asyncmvc.async.Throttle.current shouldBe 0
+      com.equalexperts.play.asyncmvc.async.Throttle.current shouldBe 0
     }
 
   }
@@ -270,7 +270,7 @@ class AsyncControllerSpec extends AsyncSetup with UnitSpec with FakePlayApplicat
     }
 
     eventually(Timeout(Span(7000, Millis))) {
-      uk.gov.hmrc.play.asyncmvc.async.Throttle.current shouldBe 0
+      com.equalexperts.play.asyncmvc.async.Throttle.current shouldBe 0
     }
 
   }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 HM Revenue & Customs
+ * Copyright 2017 Equal Experts
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.play.asyncmvc.example.controllers
+package com.equalexperts.play.asyncmvc.example.controllers
 
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.mvc._
 import play.twirl.api.Html
-import uk.gov.hmrc.play.asyncmvc.async.AsyncPaths
-import uk.gov.hmrc.play.asyncmvc.example.connectors.{Stock, StockConnector}
-import uk.gov.hmrc.play.asyncmvc.model.ViewCodes
+import com.equalexperts.play.asyncmvc.async.AsyncPaths
+import com.equalexperts.play.asyncmvc.example.connectors.{Stock, StockConnector}
+import com.equalexperts.play.asyncmvc.model.ViewCodes
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
