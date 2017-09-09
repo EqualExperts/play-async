@@ -113,15 +113,24 @@ The supported status codes which can be supplied to asyncUICallbackWithStatus ar
 com.equalexpertsplay.asyncmvc.example.controllers.ExampleAsyncController	- Example async controller where the client is disconnected from the Future. The example is based on the ExampleNormalController controller where the Future and Result have been separated.
 
 
-## Installing
+### Installing
 
 Include the following dependency in your SBT build
 
-``` scala
+```scala
 resolvers += Resolver.bintrayRepo("equalexperts", "open-source")
 
 libraryDependencies += "com.equalexperts" %% "play-async" % "[INSERT-VERSION]"
 ```
+
+### Building with Docker
+
+`docker build -t emailaddress:latest .`
+
+### Publishing with Docker
+
+`docker run -v ~/.ivy2:/root/.ivy2 -t emailaddress:latest`
+
 
 ## Contributors 
 
