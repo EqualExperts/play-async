@@ -114,17 +114,6 @@ The supported status codes which can be supplied to asyncUICallbackWithStatus ar
 
 com.equalexpertsplay.asyncmvc.example.controllers.ExampleAsyncController	- Example async controller where the client is disconnected from the Future. The example is based on the ExampleNormalController controller where the Future and Result have been separated.
 
-
-### Installing
-
-Include the following dependency in your SBT build
-
-```scala
-resolvers += Resolver.bintrayRepo("equalexperts", "open-source")
-
-libraryDependencies += "com.equalexperts" %% "play-async" % "[INSERT-VERSION]"
-```
-
 ### Building with Docker
 
 `docker build -t emailaddress:latest .`
@@ -133,6 +122,26 @@ libraryDependencies += "com.equalexperts" %% "play-async" % "[INSERT-VERSION]"
 
 `docker run -v ~/.ivy2:/root/.ivy2 -t emailaddress:latest`
 
+### Installing
+
+Include the following dependency in your SBT build
+
+* Release candidate versions
+
+[ ![Download](https://api.bintray.com/packages/equalexperts/open-source-release-candidates/play-async/images/download.svg) ](https://bintray.com/equalexperts/open-source-release-candidates/play-async/_latestVersion)
+
+```scala
+resolvers += Resolver.bintrayRepo("equalexperts", "open-source-release-candidates")
+
+libraryDependencies += "com.equalexperts" %% "play-async" % "[INSERT-VERSION]"
+```
+
+* Released versions
+```scala
+resolvers += Resolver.bintrayRepo("equalexperts", "open-source")
+
+libraryDependencies += "com.equalexperts" %% "play-async" % "[INSERT-VERSION]"
+```
 
 ## Contributors 
 
