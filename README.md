@@ -113,7 +113,7 @@ The supported status codes which can be supplied to asyncUICallbackWithStatus ar
 
 ##Example PlayAsync controller
 
-uk.gov.hmrc.play.asyncmvc.example.controllers.ExampleAsyncController	- Example async controller where the client is disconnected from the Future. The example is based on the ExampleNormalController controller where the Future and Result have been separated.
+com.equalexpertsplay.asyncmvc.example.controllers.ExampleAsyncController	- Example async controller where the client is disconnected from the Future. The example is based on the ExampleNormalController controller where the Future and Result have been separated.
 
 
 ## Installing
@@ -121,9 +121,9 @@ uk.gov.hmrc.play.asyncmvc.example.controllers.ExampleAsyncController	- Example a
 Include the following dependency in your SBT build
 
 ``` scala
-resolvers += Resolver.bintrayRepo("hmrc", "releases")
+resolvers += Resolver.bintrayRepo("equalexperts", "open-source")
 
-libraryDependencies += "uk.gov.hmrc" %% "play-async" % "[INSERT-VERSION]"
+libraryDependencies += "com.equalexperts" %% "play-async" % "[INSERT-VERSION]"
 ```
 
 ### License
