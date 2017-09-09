@@ -1,12 +1,11 @@
 
 # play-async
 
-[![Build Status](https://travis-ci.org/hmrc/play-async.svg?branch=master)](https://travis-ci.org/hmrc/play-async) [ ![Download](https://api.bintray.com/packages/hmrc/releases/play-async/images/download.svg) ](https://bintray.com/hmrc/releases/play-async/_latestVersion)
-
-
 Framework disconnects the HTTP client (Browser/RestFul API) request from waiting for long running server-side actions to complete and shields the application server from clients attempting to re-submit duplicate requests.
 
 The play-async framework provides the tools to transform a synchronous controller action into a true async controller, where the client drives the polling for the requested resource back to the server.
+
+[This based off a forked from [/hmrc/play-async](https://github.com/hmrc/play-async)]
 
 ##Background
 
@@ -114,7 +113,7 @@ The supported status codes which can be supplied to asyncUICallbackWithStatus ar
 
 ##Example PlayAsync controller
 
-uk.gov.hmrc.play.asyncmvc.example.controllers.ExampleAsyncController	- Example async controller where the client is disconnected from the Future. The example is based on the ExampleNormalController controller where the Future and Result have been separated.
+com.equalexpertsplay.asyncmvc.example.controllers.ExampleAsyncController	- Example async controller where the client is disconnected from the Future. The example is based on the ExampleNormalController controller where the Future and Result have been separated.
 
 
 ## Installing
@@ -122,9 +121,9 @@ uk.gov.hmrc.play.asyncmvc.example.controllers.ExampleAsyncController	- Example a
 Include the following dependency in your SBT build
 
 ``` scala
-resolvers += Resolver.bintrayRepo("hmrc", "releases")
+resolvers += Resolver.bintrayRepo("equalexperts", "open-source")
 
-libraryDependencies += "uk.gov.hmrc" %% "play-async" % "[INSERT-VERSION]"
+libraryDependencies += "com.equalexperts" %% "play-async" % "[INSERT-VERSION]"
 ```
 
 ### License
