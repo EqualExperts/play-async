@@ -1,5 +1,7 @@
 # play-async
 
+[ ![Download](https://api.bintray.com/packages/equalexperts/open-source-release-candidates/play-async/images/download.svg) ](https://bintray.com/equalexperts/open-source-release-candidates/play-async/_latestVersion)
+
 Framework disconnects the HTTP client (Browser/RestFul API) request from waiting for long running server-side actions to complete and shields the application server from clients attempting to re-submit duplicate requests.
 
 The play-async framework provides the tools to transform a synchronous controller action into a true async controller, where the client drives the polling for the requested resource back to the server.
