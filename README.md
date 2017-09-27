@@ -20,7 +20,7 @@ The play-async library shields the application server from the issues detailed a
 
 ## Features
 
-The play_async_mvc library addresses the above concerns with the following features…
+The play-async library addresses the above concerns with the following features…
 
 * Allow long running Future to be placed onto a background queue for off-line processing and disconnect the HTTP client from waiting on the result. This removes the need for the client to remain connected to the application server waiting for the result.
 * Throttle the number of concurrent async requests that are currently executing on a single application server instance.
@@ -110,17 +110,15 @@ The supported status codes which can be supplied to asyncUICallbackWithStatus ar
 |Error   | The task generated an error.  |
 |Throttle   | The throttle marker has been reached. Too many concurrent requests.  |
 
-##Example PlayAsync controller
+## Example PlayAsync controller
 
 com.equalexpertsplay.asyncmvc.example.controllers.ExampleAsyncController	- Example async controller where the client is disconnected from the Future. The example is based on the ExampleNormalController controller where the Future and Result have been separated.
 
-### Building with Docker
+## Presitence implementations
 
-`docker build -t emailaddress:latest .`
+* DynamoDB : [async-persistence](https://github.com/EqualExperts/async-persistence)
+* MongoDB : TBC
 
-### Publishing with Docker
-
-`docker run -v ~/.ivy2:/root/.ivy2 -t emailaddress:latest`
 
 ### Installing
 
@@ -137,6 +135,9 @@ libraryDependencies += "com.equalexperts" %% "play-async" % "[INSERT-VERSION]"
 ```
 
 * Released versions
+
+TBC
+
 ```scala
 resolvers += Resolver.bintrayRepo("equalexperts", "open-source")
 
