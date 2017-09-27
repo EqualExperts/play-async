@@ -20,10 +20,8 @@ import com.equalexperts.play.asyncmvc.model.TaskCache
 
 import scala.concurrent.Future
 
-case class TaskCachePersist(id: String, task:TaskCache)
-
 trait AsyncCache {
-  def save(expectation: TaskCache, expire:Long): Future[TaskCachePersist]
-  def findByTaskId(id: String): Future[Option[TaskCachePersist]]
+  def save(expectation: TaskCache, expire:Long): Future[TaskCache]
+  def findByTaskId(id: String): Future[Option[TaskCache]]
   def removeById(id: String): Future[Unit]
 }
