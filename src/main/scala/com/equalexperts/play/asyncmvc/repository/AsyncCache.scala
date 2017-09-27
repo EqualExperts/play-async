@@ -16,12 +16,12 @@
 
 package com.equalexperts.play.asyncmvc.repository
 
-import com.equalexperts.play.asyncmvc.model.TaskCache
-
-import scala.concurrent.Future
-
 trait AsyncCache {
-  def save(expectation: TaskCache, expire:Long): Future[TaskCache]
-  def findByTaskId(id: String): Future[Option[TaskCache]]
-  def removeById(id: String): Future[Unit]
+
+  import com.equalexperts.play.asyncmvc.model.TaskCache
+  import scala.concurrent.{ExecutionContext, Future}
+
+  def save(expectation: TaskCache, expire:Long)(implicit ex :ExecutionContext): Future[TaskCache]
+  def findByTaskId(id: String)(implicit ex :ExecutionContext): Future[Option[TaskCache]]
+  def removeById(id: String)(implicit ex :ExecutionContext): Future[Unit]
 }
