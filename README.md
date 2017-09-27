@@ -143,6 +143,15 @@ resolvers += Resolver.bintrayRepo("equalexperts", "open-source")
 libraryDependencies += "com.equalexperts" %% "play-async" % "[INSERT-VERSION]"
 ```
 
+### Building with Docker
+
+`docker build -t play-async:latest .`
+
+### Publishing with Docker
+
+`docker run -v ~/.ivy2:/root/.ivy2 -t play-async:latest`
+
+
 ## Contributors 
 
 This based off a forked from [/hmrc/play-async](https://github.com/hmrc/play-async)
