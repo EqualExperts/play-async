@@ -114,10 +114,16 @@ The supported status codes which can be supplied to asyncUICallbackWithStatus ar
 
 com.equalexpertsplay.asyncmvc.example.controllers.ExampleAsyncController	- Example async controller where the client is disconnected from the Future. The example is based on the ExampleNormalController controller where the Future and Result have been separated.
 
-## Presitence implementations
+## Implementations
+
+#### Presitence 
 
 * DynamoDB : [async-persistence](https://github.com/EqualExperts/async-persistence)
-* MongoDB : TBC
+* MongoDB : [async-mongo-persistence](https://github.com/EqualExperts/async-mongo-persistence)
+
+#### Crytography & HTTP Filters
+
+* Play framework : [async-crypto-filters](https://github.com/EqualExperts/async-crypto-filters)
 
 
 ### Installing
