@@ -21,8 +21,7 @@ import com.equalexperts.play.asyncmvc.model._
 import play.api.Logger
 import play.api.mvc._
 import uk.gov.hmrc.time.DateTimeUtils
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 import uk.gov.hmrc.http.HeaderCarrier
 
 /**
@@ -59,7 +58,7 @@ trait AsyncMVC[OUTPUT] extends AsyncTask[OUTPUT] with SessionHandler with AsyncV
   // NOTE: The action wrapper is lightweight and only session is check for the existence of a running task!
   class AsyncActionWrapper {
 
-    def async(callbackWithStatus:callbackWithStatusType)(view:Int=>Future[Result])(implicit request:Request[AnyContent]): Future[Result] = {
+    def async(callbackWithStatus:callbackWithStatusType)(view:Int=>Future[Result])(implicit request:Request[AnyContent], ec:ExecutionContext): Future[Result] = {
       withCorrespondingAsyncIdMatch {
         case Some(task) => callbackWithStatus(ViewCodes.Polling)(Some(task.id))
 
@@ -77,7 +76,7 @@ trait AsyncMVC[OUTPUT] extends AsyncTask[OUTPUT] with SessionHandler with AsyncV
    * @param request - The request.
    * @return - Future[Result]
    */
-  def withCorrespondingAsyncIdMatch(func: Option[AsyncMvcSession] => Future[Result])(implicit request:Request[AnyContent]): Future[Result] = {
+  def withCorrespondingAsyncIdMatch(func: Option[AsyncMvcSession] => Future[Result])(implicit request:Request[AnyContent], ec:ExecutionContext): Future[Result] = {
 
     getSessionObject match {
       case Some(task) =>
@@ -101,7 +100,7 @@ trait AsyncMVC[OUTPUT] extends AsyncTask[OUTPUT] with SessionHandler with AsyncV
    * @param callbackStatus  - Invoked when the client is responsible for rendering the display based on a status. This could be timeout, error...
    * @return - Future[Result]
    */
-  def pollTask(route:Call, callback:OUTPUT => String => Future[Result], callbackStatus:callbackWithStatusType)(implicit request:Request[AnyContent], hc:HeaderCarrier) = checkTaskStatus(route, callback, callbackStatus)
+  def pollTask(route:Call, callback:OUTPUT => String => Future[Result], callbackStatus:callbackWithStatusType)(implicit request:Request[AnyContent], hc:HeaderCarrier, ec:ExecutionContext) = checkTaskStatus(route, callback, callbackStatus)
 
   /**
    * Function used in async blocking mode to not display the polling page when async task completes within expected wait period.
@@ -116,7 +115,7 @@ trait AsyncMVC[OUTPUT] extends AsyncTask[OUTPUT] with SessionHandler with AsyncV
    * @return - Future[Result]
    *
    */
-  def waitForAsyncTask(route:Call, callback:callbackSuccessType, callbackStatus:callbackWithStatusType)(implicit request:Request[AnyContent], hc:HeaderCarrier) = {
+  def waitForAsyncTask(route:Call, callback:callbackSuccessType, callbackStatus:callbackWithStatusType)(implicit request:Request[AnyContent], hc:HeaderCarrier, ec:ExecutionContext) = {
 
     withCorrespondingAsyncIdMatch {
       case Some(session) =>
@@ -142,7 +141,7 @@ trait AsyncMVC[OUTPUT] extends AsyncTask[OUTPUT] with SessionHandler with AsyncV
    */
   def asyncWrapper(callbackWithStatus:callbackWithStatusType)
                   (futureFunction: HeaderCarrier => Future[OUTPUT])
-                  (implicit headerCarrier: HeaderCarrier, request:Request[AnyContent]): Future[Result] = {
+                  (implicit headerCarrier: HeaderCarrier, request:Request[AnyContent], ec:ExecutionContext): Future[Result] = {
 
     import AsyncMVCAsyncActor.AsyncMessage
 
@@ -192,7 +191,7 @@ trait AsyncMVC[OUTPUT] extends AsyncTask[OUTPUT] with SessionHandler with AsyncV
    * @param hc - Header carrier.
    * @return - Future[Result]
    */
-  private def checkTaskStatus(route:Call, callback:callbackSuccessType, callbackStatus:callbackWithStatusType)(implicit request:Request[AnyContent], hc:HeaderCarrier): Future[Result] = {
+  private def checkTaskStatus(route:Call, callback:callbackSuccessType, callbackStatus:callbackWithStatusType)(implicit request:Request[AnyContent], hc:HeaderCarrier, ec:ExecutionContext): Future[Result] = {
 
     def getTaskAndDecideRoute(id:String) = {
       taskCache.get(id).map {
@@ -235,7 +234,7 @@ trait AsyncMVC[OUTPUT] extends AsyncTask[OUTPUT] with SessionHandler with AsyncV
    * @param request - Http Request.
    * @return - Future[Result]
    */
-  private def decideUIAction(task:TaskCache, callback:callbackSuccessType, callbackWithStatus:callbackWithStatusType)(implicit request:Request[AnyContent]): Either[Future[Result], Future[Result]] = {
+  private def decideUIAction(task:TaskCache, callback:callbackSuccessType, callbackWithStatus:callbackWithStatusType)(implicit request:Request[AnyContent], ex:ExecutionContext): Either[Future[Result], Future[Result]] = {
     task.status match {
       case StatusCodes.Complete =>                // SUCCESS - Task has completed, invoke callback to generate result.
         Logger.info(wrap(s"decideUIAction:The task [${task.id}] has completed successfully."))
@@ -263,11 +262,11 @@ trait AsyncMVC[OUTPUT] extends AsyncTask[OUTPUT] with SessionHandler with AsyncV
    * @param request - Current request.
    * @return - Future[Result]
    */
-  private def removeAsyncKeyFromSession(result:Future[Result])(implicit request: Request[AnyContent]): Future[Result] = {
+  private def removeAsyncKeyFromSession(result:Future[Result])(implicit request: Request[AnyContent], ec:ExecutionContext): Future[Result] = {
     result.map(res => res.withSession(res.session.copy(data = clearASyncIdFromSession(res.session.data))))
   }
 
-  private def throttleUp(callbackWithStatus:callbackWithStatusType)(func: => Future[Result])(implicit request:Request[AnyContent]): Future[Result] = {
+  private def throttleUp(callbackWithStatus:callbackWithStatusType)(func: => Future[Result])(implicit request:Request[AnyContent], ec:ExecutionContext): Future[Result] = {
     
     if (Throttle.current != -1 && Throttle.current >= throttleLimit)  {
       Logger.warn(wrap(s"The throttle limit has been reached! Current limit [$throttleLimit] Current [${Throttle.current}]"))
@@ -302,8 +301,8 @@ trait AsyncMVC[OUTPUT] extends AsyncTask[OUTPUT] with SessionHandler with AsyncV
  * @tparam T - The type of the Cache.
  */
 trait Cache[T] {
-  def put(id:String, value:TaskCache)(implicit hc:HeaderCarrier) : Future[Unit]
-  def get(id:String)(implicit hc:HeaderCarrier) : Future[Option[T]]
+  def put(id:String, value:TaskCache)(implicit hc:HeaderCarrier, ec:ExecutionContext) : Future[Unit]
+  def get(id:String)(implicit hc:HeaderCarrier, ec:ExecutionContext) : Future[Option[T]]
 }
 
 /**

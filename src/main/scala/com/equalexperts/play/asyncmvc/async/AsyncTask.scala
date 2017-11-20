@@ -26,7 +26,7 @@ import scala.concurrent.Future
 import uk.gov.hmrc.http.HeaderCarrier
 
 /**
- * The AsyncTask is responsible for processing an AsyncMVCAsyncActor message, where is message encapsulates a Future to be processed.
+ * The AsyncTask is responsible for processing an AsyncMVCAsyncActor message. Message encapsulates a Future to be processed.
  * @tparam OUTPUT - The Type the Task will return.
  */
 trait AsyncTask[OUTPUT] extends LogWrapper {
@@ -56,7 +56,7 @@ trait AsyncTask[OUTPUT] extends LogWrapper {
   }
 
   /**
-   * Defines an Actor which is responsible for processing the AsyncMVCAsyncActor.AsyncMessage message.
+   * Defines an Actor which is responsible for processing the offline (AsyncMVCAsyncActor.AsyncMessage) task.
    * @param sessionCache - The cache used to update the status of the task associated with the message.
    * @param clientTimeout - The maximum amount of time a client will wait for the message to be processed.
    */
@@ -68,7 +68,7 @@ trait AsyncTask[OUTPUT] extends LogWrapper {
 
       case asyncTask @ AsyncMessage(id, _, _, hc, _) => processMessage(asyncTask)(hc.getOrElse(throw new Exception("No HeaderCarrier found in message!")), sessionCache)
 
-      case unknown @ _  => Logger.info(wrap(s"Unknown message received! $unknown"))
+      case unknown @ _  => Logger.error(wrap(s"Unknown message received! $unknown"))
     }
 
     private def processMessage(asyncTask:AsyncMessage)(implicit headerCarrier: HeaderCarrier, sessionCache: Cache[TaskCache]): Unit = {

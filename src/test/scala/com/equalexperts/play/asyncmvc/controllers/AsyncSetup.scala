@@ -25,7 +25,7 @@ import com.equalexperts.play.asyncmvc.model.TaskCache
 import play.api.test.FakeRequest
 
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 import uk.gov.hmrc.http.HeaderCarrier
 
 trait AsyncSetup {
@@ -84,12 +84,12 @@ trait AsyncSetup {
     val cache = new Cache[TaskCache] {
       var bodyCache:Option[TaskCache] = None
 
-      def put(id:String, value:TaskCache)(implicit hc:HeaderCarrier):Future[Unit] = {
+      def put(id:String, value:TaskCache)(implicit hc:HeaderCarrier, ex:ExecutionContext):Future[Unit] = {
         bodyCache = Some(value)
         Future.successful(Unit)
       }
       
-      def get(id:String)(implicit hc:HeaderCarrier):Future[Option[TaskCache]] = {
+      def get(id:String)(implicit hc:HeaderCarrier, ex:ExecutionContext):Future[Option[TaskCache]] = {
         Future.successful(bodyCache)
       }
     }
@@ -173,11 +173,11 @@ trait AsyncSetup {
     override val cache = new Cache[TaskCache] {
       var bodyCache:Option[TaskCache] = None
 
-      def put(id:String, value:TaskCache)(implicit hc:HeaderCarrier):Future[Unit] = {
+      def put(id:String, value:TaskCache)(implicit hc:HeaderCarrier, ex:ExecutionContext) : Future[Unit] = {
         Future.failed(new Exception("Controlled explosion!"))
       }
 
-      def get(id:String)(implicit hc:HeaderCarrier):Future[Option[TaskCache]] = {
+      def get(id:String)(implicit hc:HeaderCarrier, ex:ExecutionContext) : Future[Option[TaskCache]] = {
         Future.failed(new Exception("Should not be called"))
       }
     }
