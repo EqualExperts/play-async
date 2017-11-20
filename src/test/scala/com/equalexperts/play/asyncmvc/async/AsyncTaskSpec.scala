@@ -28,7 +28,7 @@ import play.api.mvc.Controller
 import uk.gov.hmrc.play.test.UnitSpec
 import uk.gov.hmrc.time.DateTimeUtils
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.ExecutionContext.Implicits.global
 import uk.gov.hmrc.http
 import uk.gov.hmrc.http.HeaderCarrier
@@ -44,12 +44,12 @@ class AsyncTaskSpec extends UnitSpec with ScalaFutures with FakePlayApplication 
     class CacheStore extends Cache[TaskCache] {
       var store:Option[TaskCache] = None
 
-      override def put(id: String, value: TaskCache)(implicit hc: HeaderCarrier): Future[Unit] = {
+      override def put(id: String, value: TaskCache)(implicit hc: HeaderCarrier, ex:ExecutionContext): Future[Unit] = {
         store = Some(value)
         Future.successful(Unit)
       }
 
-      override def get(id: String)(implicit hc: HeaderCarrier): Future[Option[TaskCache]] = {
+      override def get(id: String)(implicit hc: HeaderCarrier, ex:ExecutionContext): Future[Option[TaskCache]] = {
         Future.successful(store)
       }
     }
